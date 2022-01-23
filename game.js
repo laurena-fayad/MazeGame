@@ -71,7 +71,7 @@ window.onload = function(){
     function youWin(){
         //If the user goes to E after already losing, a retry msg will be displayed
         if (boundary1.style.backgroundColor == "red"){
-            status.innerHTML = "You already lost. Click S to retry."
+            status.innerHTML = "You already lost. Go back to S to retry."
         }else if (!(boundary1.style.backgroundColor == "green")){
             colorWallsGreen()
             score += 5
