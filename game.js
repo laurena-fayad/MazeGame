@@ -10,10 +10,15 @@ window.onload = function(){
     let status = document.getElementById('status')
     let game_status = "Avoid touching the walls... "
     
+    //Appending an instructions div to the body
+    let instructions_div = document.createElement('div')
+    instructions_div.innerHTML = '<h2>Click "S" at any time to reset the game.</h2>'
+    document.body.appendChild(instructions_div)
+
     //Appending a score div to the body
-    let div = document.createElement('div')
-    div.innerHTML = '<h2 id = "score"></h2>'
-    document.body.appendChild(div)
+    let score_div = document.createElement('div')
+    score_div.innerHTML = '<h2 id = "score"></h2>'
+    document.body.appendChild(score_div)
     score_content = document.getElementById("score")
 
     //Function to color all the walls red
