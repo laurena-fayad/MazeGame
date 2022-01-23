@@ -17,7 +17,7 @@ window.onload = function(){
 
     //Appending a score div to the body
     let score_div = document.createElement('div')
-    score_div.innerHTML = '<h2 id = "score"></h2>'
+    score_div.innerHTML = '<h2 id = "score"> Score = 0</h2>'
     document.body.appendChild(score_div)
     score_content = document.getElementById("score")
 
