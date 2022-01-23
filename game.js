@@ -34,7 +34,9 @@ window.onload = function(){
     }
 
     function youWin(){
-        if (document.getElementById('boundary1').style.backgroundColor = "#eeeeee"){
+        if (document.getElementById("boundary1").style.backgroundColor == "red"){
+            status.innerHTML = "You already lost. Click S to retry."
+        }else{
             colorWallsGreen()
             status.innerHTML = "Great job, you won! Score = 5"
         }
