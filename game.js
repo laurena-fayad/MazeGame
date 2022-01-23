@@ -3,12 +3,18 @@ window.onload = function(){
 
     //Variables to be used
     let boundary1 = document.getElementById("boundary1")
+    let score = 0
     let maze_borders = document.getElementById('game').getElementsByClassName('boundary')
     let start_btn = document.getElementById('start')
     let end_btn = document.getElementById('end')
     let status = document.getElementById('status')
     let game_status = "Avoid touching the walls... "
     
+    //Appending a score div to the body
+    let score_div = document.createElement('div')
+    score_div.innerHTML = '<h2 id = "score"></h2>'
+    document.body.appendChild(score_div)
+
     //Function to color all the walls red
     function colorWallsRed(){
         for (var i = 0; i<maze_borders.length; i++){
@@ -40,7 +46,8 @@ window.onload = function(){
     function youLose(){
         if (!(boundary1.style.backgroundColor == "red") && !(boundary1.style.backgroundColor == "green")){
             colorWallsRed()
-            status.innerHTML = "You lost! Score = -10"
+            score  -= 10
+            status.innerHTML = "You lost! Score = " + score
         }
     }
 
@@ -51,12 +58,15 @@ window.onload = function(){
             status.innerHTML = "You already lost. Click S to retry."
         }else{
             colorWallsGreen()
-            status.innerHTML = "Great job, you won! Score = 5"
+            score += 5
+            status.innerHTML = "Great job, you won! Score = " + score
         }
     }
 
     //Game starts if the mouse hovers over the start btn
     start_btn.addEventListener("mouseover", function(){
+
+        resetMaze()
 
         //Calling the youLose function if the user touches any wall
         for (var i = 0; i<maze_borders.length; i++){
