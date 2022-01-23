@@ -29,8 +29,10 @@ window.onload = function(){
     }
 
     function youLose(){
-        colorWallsRed()
-        status.innerHTML = "You lost! Score = -10"
+        if (!(document.getElementById("boundary1").style.backgroundColor == "red")){
+            colorWallsRed()
+            status.innerHTML = "You lost! Score = -10"
+        }
     }
 
     function youWin(){
