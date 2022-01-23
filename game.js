@@ -1,42 +1,53 @@
+//Code will be executed after HTML content has fully loaded
 window.onload = function(){
+
+    //Variables to be used
+    let boundary1 = document.getElementById("boundary1")
     let maze_borders = document.getElementById('game').getElementsByClassName('boundary')
     let start_btn = document.getElementById('start')
     let end_btn = document.getElementById('end')
     let status = document.getElementById('status')
     let game_status = "Avoid touching the walls... "
     
+    //Function to color all the walls red
     function colorWallsRed(){
         for (var i = 0; i<maze_borders.length; i++){
             maze_borders[i].style.backgroundColor = "red";
         }
     }
 
+    //Function to color all the walls gray
     function colorWallsGray(){
         for (var i = 0; i<maze_borders.length; i++){
             maze_borders[i].style.backgroundColor = "#eeeeee";
         }
     }
 
+    //Function to color all the walls green
     function colorWallsGreen(){
         for (var i = 0; i<maze_borders.length; i++){
             maze_borders[i].style.backgroundColor = "green";
         }
     }
 
+    //Function to reset the maze
     function resetMaze(){
         colorWallsGray()
         status.innerHTML = game_status
     }
 
+    //Function executed when the user loses if the walls are gray (neither red nor green)
     function youLose(){
-        if (!(document.getElementById("boundary1").style.backgroundColor == "red")){
+        if (!(boundary1.style.backgroundColor == "red") && !(boundary1.style.backgroundColor == "green")){
             colorWallsRed()
             status.innerHTML = "You lost! Score = -10"
         }
     }
 
+    //Function executed when the user wins
     function youWin(){
-        if (document.getElementById("boundary1").style.backgroundColor == "red"){
+        //If the user goes to E after already losing, a retry msg will be displayed
+        if (boundary1.style.backgroundColor == "red"){
             status.innerHTML = "You already lost. Click S to retry."
         }else{
             colorWallsGreen()
@@ -44,12 +55,18 @@ window.onload = function(){
         }
     }
 
+    //Game starts if the mouse hovers over the start btn
     start_btn.addEventListener("mouseover", function(){
-        
+
+        //Calling the youLose function if the user touches any wall
         for (var i = 0; i<maze_borders.length; i++){
             maze_borders[i].addEventListener("mouseover", youLose)
         }
-        start_btn.addEventListener("click", resetMaze)
+
+        //Calling the youWin function if the user gets to the end btn
         end_btn.addEventListener("mouseover", youWin)
+
+        //Calling the resetMaze function if the user clicks the start btn
+        start_btn.addEventListener("click", resetMaze)
     })
 }
