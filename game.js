@@ -3,12 +3,14 @@ window.onload = function(){
 
     //Variables to be used
     let boundary1 = document.getElementById("boundary1")
+    let game_div = document.getElementById("game")
     let score = 0
-    let maze_borders = document.getElementById('game').getElementsByClassName('boundary')
+    let maze_borders = game_div.getElementsByClassName('boundary')
     let start_btn = document.getElementById('start')
     let end_btn = document.getElementById('end')
     let status = document.getElementById('status')
     let game_status = "Avoid touching the walls... "
+    let cheating = "Stay inside the maze!"
     
     //Appending an instructions div to the body
     let instructions_div = document.createElement('div')
@@ -25,6 +27,13 @@ window.onload = function(){
     function colorWallsRed(){
         for (var i = 0; i<maze_borders.length; i++){
             maze_borders[i].style.backgroundColor = "red";
+        }
+    }
+
+    //Function to color all the walls orange
+    function colorWallsOrange(){
+        for (var i = 0; i<maze_borders.length; i++){
+            maze_borders[i].style.backgroundColor = "orange";
         }
     }
 
@@ -50,6 +59,7 @@ window.onload = function(){
         score_content.innerHTML = "Score = " + score
     }
 
+    //Function to retry without resetting the score
     function retry(){
         colorWallsGray()
         status.innerHTML = game_status
@@ -69,9 +79,11 @@ window.onload = function(){
 
     //Function executed when the user wins
     function youWin(){
-        //If the user goes to E after already losing, a retry msg will be displayed
-        if (boundary1.style.backgroundColor == "red"){
-            status.innerHTML = "You already lost. Go back to S to retry."
+        //If the user goes to E after already losing or from outside of the maze,
+        //a retry msg will be displayed
+        if ((boundary1.style.backgroundColor == "red") 
+        || (boundary1.style.backgroundColor == "orange")){
+            status.innerHTML = "Go back to S to retry."
         }else if (!(boundary1.style.backgroundColor == "green")){
             colorWallsGreen()
             score += 5
@@ -83,6 +95,15 @@ window.onload = function(){
     //Game starts if the mouse hovers over the start btn
     start_btn.addEventListener("mouseover", function(){
 
+        //Give warning if the mouse leaves the maze 
+        game_div.addEventListener("mouseleave", function(){
+            status.innerHTML= cheating
+            colorWallsOrange()
+            for (var i = 0; i<maze_borders.length; i++){
+                maze_borders[i].removeEventListener("mouseover", youLose)
+            }
+        });
+    
         retry()
 
         //Calling the youLose function if the user touches any wall
